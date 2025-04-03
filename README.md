@@ -1,184 +1,53 @@
-
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crédito para Investimento</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: url('https://i.imgur.com/aPLuDmc.jpeg') no-repeat center center fixed;
-            background-size: cover;
-            text-align: center;
-            padding: 20px;
-            margin: 0;
-        }
-        
-        .container {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            margin: auto;
-        }
-
-        h2 {
-            color: #000;
-        }
-
-        label {
-            font-weight: bold;
-            display: block;
-            margin-top: 10px;
-            text-align: left;
-        }
-
-        select, input {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        button {
-            background-color: #28a745;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 15px;
-            width: 100%;
-            font-size: 18px;
-        }
-
-        button:hover {
-            background-color: #218838;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-            font-weight: normal;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                width: 90%;
-            }
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <h2>Crédito para Investimento</h2>
-    <form id="creditoForm">
-        <label for="nome">Seu Nome</label>
-        <input type="text" id="nome" name="nome" required>
-
-        <label for="email">Seu E-mail</label>
-        <input type="email" id="email" name="email" required>
-
-        <label for="telefone">Seu Telefone</label>
-        <input type="tel" id="telefone" name="telefone" required>
-
-        <label for="cidade">Cidade</label>
-        <input type="text" id="cidade" name="cidade" required>
-
-        <label for="investimento">Área de Investimento</label>
-        <select id="investimento" name="investimento" required>
-            <option value="" disabled selected>Selecione uma opção</option>
-            <option value="Área Rural">Área Rural</option>
-            <option value="Veículo">Veículo</option>
-            <option value="Imóvel">Imóvel</option>
-            <option value="Construção">Construção</option>
-            <option value="Reforma">Reforma</option>
-            <option value="Loja/Ponto Comercial">Loja/Ponto Comercial</option>
-        </select>
-
-        <label for="valor">Valor do Investimento</label>
-        <select id="valor" name="valor" onchange="atualizarParcelas()" required>
-            <option value="" disabled selected>Selecione um valor</option>
-            <option value="100000">R$ 100.000</option>
-            <option value="150000">R$ 150.000</option>
-            <option value="200000">R$ 200.000</option>
-            <option value="250000">R$ 250.000</option>
-            <option value="350000">R$ 350.000</option>
-            <option value="400000">R$ 400.000</option>
-            <option value="500000">R$ 500.000</option>
-            <option value="600000">R$ 600.000</option>
-            <option value="750000">R$ 750.000</option>
-            <option value="800000">R$ 800.000</option>
-            <option value="1000000">R$ 1.000.000</option>
-        </select>
-
-        <label for="parcela">Valor da Parcela</label>
-        <select id="parcela" name="parcela" required>
-            <option value="" disabled selected>Selecione o valor do investimento primeiro</option>
-        </select>
-
-        <button type="button" onclick="enviarWhatsApp()">Solicitar Crédito via WhatsApp</button>
-    </form>
-</div>
-
-<script>
-    function atualizarParcelas() {
-        var valor = document.getElementById("valor").value;
-        var parcela = document.getElementById("parcela");
-
-        parcela.innerHTML = '<option value="" disabled selected>Selecione uma opção</option>';
-
-        var opcoesParcelas = {
-            "100000": [590, 690, 800, 900, 1000],
-            "150000": [890, 950, 1200, 1500, 1900],
-            "200000": [1100, 1300, 1500, 1800, 2200],
-            "250000": [1500, 2000, 2500, 3000, 3500],
-            "350000": [2000, 2500, 3000, 3500, 4000],
-            "400000": [2200, 2700, 3200, 3800, 4500],
-            "500000": [3000, 4000, 5000, 6000, 7000],
-            "600000": [3500, 4500, 5500, 6500, 7500],
-            "750000": [5000, 6000, 7000, 8000, 9000],
-            "800000": [5500, 7000, 8500, 10000, 11500],
-            "1000000": [7000, 10000, 15000, 20000, 25000]
-        };
-
-        if (valor in opcoesParcelas) {
-            opcoesParcelas[valor].forEach(function(p) {
-                var option = document.createElement("option");
-                option.value = p;
-                option.text = "R$ " + p.toLocaleString();
-                parcela.appendChild(option);
-            });
-        }
-    }
-
-    function enviarWhatsApp() {
-        var nome = document.getElementById("nome").value.trim();
-        var email = document.getElementById("email").value.trim();
-        var telefone = document.getElementById("telefone").value.trim();
-        var cidade = document.getElementById("cidade").value.trim();
-        var investimento = document.getElementById("investimento").value;
-        var valor = document.getElementById("valor").value;
-        var parcela = document.getElementById("parcela").value;
-
-        if (!nome || !email || !telefone || !cidade || !investimento || !valor || !parcela) {
-            alert("Por favor, preencha todos os campos antes de enviar.");
-            return;
-        }
-
-        var mensagem = `Oi, meu nome é *${nome}*.\nTenho interesse em pegar um crédito para investimento.\n\n` +
-            `📍 *Cidade:* ${cidade}\n📩 *E-mail:* ${email}\n📞 *Telefone:* ${telefone}\n` +
-            `🏡 *Área de Investimento:* ${investimento}\n💰 *Valor do Investimento:* R$ ${parseInt(valor).toLocaleString()}\n` +
-            `💳 *Valor da Parcela:* R$ ${parseInt(parcela).toLocaleString()}`;
-
-        var url = `https://api.whatsapp.com/send?phone=5598984699652&text=${encodeURIComponent(mensagem)}`;
-        window.open(url, "_blank");
-    }
-</script>
-
-</body>
-</html>
+Fechar
+Digitalização secreta
+ encontrado a 
+Chave da API do HubSpot
+ segredo
+ sobre
+linha 
+103
+. 
+Permitindo que essa secreta corra a exposição. Em vez de, 
+considerar
+Removendo o segredo do seu comprometimento e cometer histórico
+Expor este segredo pode permitir que alguém:
+• 
+Verifique a identidade disso 
+Chave da API do HubSpot
+ segredo
+• 
+Saiba quais recursos este segredo pode acessar
+• 
+Aja em nome do proprietário do segredo
+• 
+Empurre este segredo para este repositório sem ser bloqueado
+Ignorando a razão
+É usado em testes
+O segredo não representa riscos. Se alguém encontrar, não pode causar nenhum dano ou obter acesso a informações confidenciais.
+É um falso positivo
+A sequência detectada não é um segredo.
+Vou consertar mais tarde
+O segredo é real, eu entendo o risco e precisarei revogar. Isso abrirá um alerta de segurança e notificará os administradores deste repositório.
+Cancelar
+Permitir segredo
+Cometer mudanças ...
+Editar modo
+Visualização
+Modo de recuo
+Espaços
+Tamanho do recuo
+Modo de embrulho de linha
+Enrolador macio
+Editando o conteúdo do arquivo readme.md
+<! Doctype html> <html lang = "pt-br"> <head> <meta charset = "utf-8"> <meta name = "viewport" content = "largura = largura do dispositivo, scale inicial = 1.0"> <meta name = "descrição" content = "Solicite CrérDito parhing <meta name = "Keywords" Content = "Crédito, Investimento, Financiamento, Consórcio, Parcelamento"> <meta name = "Author" Content = "Seu nome Ou empresa"> <title> Crédito para Investimento </Title> <Wrind Src = "Https://ctts.cdn) @keyframes fadein {de {opacity: 0, transform: translatey (-10px),} para {opacity: 1, transform: translatey (0),}. justify-center p-4 "style =" background-imagem: url ('https://i.imgu.com/apludmc.jpeg'), "> <div class =" bg-white bg-opacity-90 p-6 rount-lg shadow-l-l-w-md w-fade-fade-in "> <h2 Class. mb-6 "> crédito para investimento </h2> <form id =" creditOform "class =" space-y-4 "> <div> <gravador class =" bloco text-700 font-semibold "> seu nome </relabel> <input type =" text "ome" nome "name =" nome "requerir Class =" Foco: anel-verde-500 "> </div> <div> 
+Usar 
+Control + Shift + M
+ Para alternar o 
+guia
+ Foco em movimento importante. Alternativamente, use 
+esc
+ então 
+guia
+ Para passar para o próximo elemento interativo na página.
+Nenhum Arquivo Escolhido
+Anexe arquivos arrastando e soltando, selecionando ou colando -os.
